@@ -1,6 +1,6 @@
 [package]
 name = "utopia-database"
-description = "Document database layer that shares storage with utopia-php/database (PostgreSQL)."
+description = "A document database layer on PostgreSQL."
 version = "0.1.0"
 edition = "2024"
 rust-version = "1.88"
@@ -19,3 +19,6 @@ tokio-postgres = { version = "0.7.12", features = ["with-chrono-0_4", "with-serd
 tracing = "0.1"
 utopia-cache = { version = "0.1.0", git = "https://github.com/utopia-rs/cache" }
 utopia-validators = { version = "0.1.0", git = "https://github.com/utopia-rs/validators" }
+
+[package.metadata.utopia]
+category = "data"
