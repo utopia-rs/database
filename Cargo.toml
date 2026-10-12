@@ -1,24 +1,38 @@
 [package]
 name = "utopia-database"
-description = "A document database layer on PostgreSQL."
+description = "Document database: collections, attributes, indexes, documents, queries, permissions, relationships and tenancy over pluggable adapters (PostgreSQL)."
 version = "0.1.0"
 edition = "2024"
 rust-version = "1.88"
 license = "BSD-3-Clause"
 
+[features]
+default = ["postgres"]
+# The PostgreSQL adapter (and the legacy row-level layer, also PostgreSQL).
+postgres = ["dep:tokio-postgres", "dep:deadpool-postgres", "dep:postgres-protocol", "dep:fallible-iterator"]
+
 [dependencies]
+async-trait = "0.1"
 bytes = "1"
 chrono = { version = "0.4", default-features = false, features = ["clock", "std", "serde"] }
-deadpool-postgres = "0.14"
+deadpool-postgres = { version = "0.14", optional = true }
+fallible-iterator = { version = "0.2", optional = true }
+postgres-protocol = { version = "0.6", optional = true }
 futures-util = { version = "0.3", default-features = false, features = ["std", "async-await-macro"] }
 getrandom = "0.3"
 hex = "0.4"
 md-5 = "0.10"
+php-std = { version = "0.1.0", git = "https://github.com/utopia-rs/php-std" }
 serde_json = { version = "1", features = ["raw_value", "preserve_order", "float_roundtrip"] }
-tokio-postgres = { version = "0.7.12", features = ["with-chrono-0_4", "with-serde_json-1"] }
+thiserror = "2"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "time", "sync", "signal", "rt", "io-util"] }
+tokio-postgres = { version = "0.7.12", optional = true, features = ["with-chrono-0_4", "with-serde_json-1"] }
 tracing = "0.1"
 utopia-cache = { version = "0.1.0", git = "https://github.com/utopia-rs/cache" }
 utopia-validators = { version = "0.1.0", git = "https://github.com/utopia-rs/validators" }
+
+[dev-dependencies]
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "time", "sync", "signal", "rt"] }
 
 [package.metadata.utopia]
 category = "data"
