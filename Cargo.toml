@@ -22,6 +22,8 @@ redis = ["dep:redis"]
 sqlite = ["dep:rusqlite"]
 # The in-memory adapter.
 memory = []
+# The MongoDB adapter, on utopia-mongo (the official driver).
+mongo = ["dep:utopia-mongo"]
 
 [dependencies]
 async-trait = "0.1"
@@ -45,6 +47,7 @@ tokio-postgres = { version = "0.7.12", optional = true, features = ["with-chrono
 tracing = "0.1"
 utopia-cache = { version = "0.1.0", git = "https://github.com/utopia-rs/cache" }
 utopia-pools = { version = "0.1.0", git = "https://github.com/utopia-rs/pools", optional = true }
+utopia-mongo = { version = "0.1.0", git = "https://github.com/utopia-rs/mongo", optional = true }
 utopia-validators = { version = "0.1.0", git = "https://github.com/utopia-rs/validators" }
 
 [dev-dependencies]
