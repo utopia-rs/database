@@ -10,6 +10,10 @@ license = "BSD-3-Clause"
 default = ["postgres"]
 # The PostgreSQL adapter (and the legacy row-level layer, also PostgreSQL).
 postgres = ["dep:tokio-postgres", "dep:deadpool-postgres", "dep:postgres-protocol", "dep:fallible-iterator"]
+# The Pool adapter: each call on a connection of a utopia-pools pool of adapters.
+pool = ["dep:utopia-pools"]
+# The Redis adapter: documents stored in Redis (redis-rs, as utopia-cache uses).
+redis = ["dep:redis"]
 
 [dependencies]
 async-trait = "0.1"
@@ -18,6 +22,7 @@ chrono = { version = "0.4", default-features = false, features = ["clock", "std"
 deadpool-postgres = { version = "0.14", optional = true }
 fallible-iterator = { version = "0.2", optional = true }
 postgres-protocol = { version = "0.6", optional = true }
+redis = { version = "0.32", optional = true, default-features = false, features = ["tokio-comp", "aio", "connection-manager", "script"] }
 futures-util = { version = "0.3", default-features = false, features = ["std", "async-await-macro"] }
 getrandom = "0.3"
 hex = "0.4"
@@ -29,6 +34,7 @@ tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "time",
 tokio-postgres = { version = "0.7.12", optional = true, features = ["with-chrono-0_4", "with-serde_json-1"] }
 tracing = "0.1"
 utopia-cache = { version = "0.1.0", git = "https://github.com/utopia-rs/cache" }
+utopia-pools = { version = "0.1.0", git = "https://github.com/utopia-rs/pools", optional = true }
 utopia-validators = { version = "0.1.0", git = "https://github.com/utopia-rs/validators" }
 
 [dev-dependencies]
