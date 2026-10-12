@@ -1,6 +1,6 @@
 [package]
 name = "utopia-database"
-description = "Document database: collections, attributes, indexes, documents, queries, permissions, relationships and tenancy over pluggable adapters (PostgreSQL)."
+description = "Document database: collections, attributes, indexes, documents, queries, permissions, relationships and tenancy over pluggable adapters (PostgreSQL, SQLite, in-memory)."
 version = "0.1.0"
 edition = "2024"
 rust-version = "1.88"
@@ -14,6 +14,10 @@ postgres = ["dep:tokio-postgres", "dep:deadpool-postgres", "dep:postgres-protoco
 pool = ["dep:utopia-pools"]
 # The Redis adapter: documents stored in Redis (redis-rs, as utopia-cache uses).
 redis = ["dep:redis"]
+# The SQLite adapter (rusqlite, with SQLite built in).
+sqlite = ["dep:rusqlite"]
+# The in-memory adapter.
+memory = []
 
 [dependencies]
 async-trait = "0.1"
@@ -28,6 +32,7 @@ getrandom = "0.3"
 hex = "0.4"
 md-5 = "0.10"
 php-std = { version = "0.1.0", git = "https://github.com/utopia-rs/php-std" }
+rusqlite = { version = "0.40", optional = true, features = ["bundled", "functions"] }
 serde_json = { version = "1", features = ["raw_value", "preserve_order", "float_roundtrip"] }
 thiserror = "2"
 tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "time", "sync", "signal", "rt", "io-util"] }
