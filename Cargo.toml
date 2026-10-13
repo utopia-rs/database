@@ -8,8 +8,8 @@ license = "BSD-3-Clause"
 
 [features]
 default = ["postgres"]
-# The PostgreSQL adapter (and the legacy row-level layer, also PostgreSQL).
-postgres = ["dep:tokio-postgres", "dep:deadpool-postgres", "dep:postgres-protocol", "dep:fallible-iterator"]
+# The PostgreSQL adapter.
+postgres = ["dep:postgres-protocol", "dep:fallible-iterator"]
 # The MariaDB adapter.
 mariadb = ["dep:mysql_async"]
 # The MySQL adapter (MariaDB's, with MySQL's differences).
@@ -28,8 +28,6 @@ mongo = ["dep:utopia-mongo"]
 [dependencies]
 async-trait = "0.1"
 bytes = "1"
-chrono = { version = "0.4", default-features = false, features = ["clock", "std", "serde"] }
-deadpool-postgres = { version = "0.14", optional = true }
 fallible-iterator = { version = "0.2", optional = true }
 postgres-protocol = { version = "0.6", optional = true }
 redis = { version = "0.32", optional = true, default-features = false, features = ["tokio-comp", "aio", "connection-manager", "script"] }
@@ -41,9 +39,7 @@ mysql_async = { version = "0.37", optional = true, default-features = false, fea
 php-std = { version = "0.1.0", git = "https://github.com/utopia-rs/php-std" }
 rusqlite = { version = "0.40", optional = true, features = ["bundled", "functions"] }
 serde_json = { version = "1", features = ["raw_value", "preserve_order", "float_roundtrip"] }
-thiserror = "2"
 tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "time", "sync", "signal", "rt", "io-util"] }
-tokio-postgres = { version = "0.7.12", optional = true, features = ["with-chrono-0_4", "with-serde_json-1"] }
 tracing = "0.1"
 utopia-cache = { version = "0.1.0", git = "https://github.com/utopia-rs/cache" }
 utopia-pools = { version = "0.1.0", git = "https://github.com/utopia-rs/pools", optional = true }
