@@ -1,16 +1,16 @@
 //! [`Permission`]: an action granted to a [`Role`], written
 //! `action("role")` (`read("any")`, `update("team:123/owner")`).
 //!
-//! PHP: `Utopia\Database\Helpers\Permission`.
+//! PHP: `Utopia\Database\Permission`.
 
 use std::fmt;
 
 use crate::error::{Error, Result};
-use crate::helpers::role::{Role, falsy};
+use crate::role::{Role, falsy};
 
 /// The action a permission grants.
 ///
-/// PHP: the `$permission` string of `Helpers\Permission`
+/// PHP: the `$permission` string of `Permission`
 /// (`Database::PERMISSION_*`). PHP's constructor also stores other
 /// strings, which [`Permission::parse`] never produces; Rust cannot hold
 /// them (a recorded deviation).
@@ -26,6 +26,12 @@ pub enum PermissionType {
     Delete,
     /// `write`: an aggregate of create, update and delete.
     Write,
+}
+
+impl AsRef<str> for PermissionType {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
 }
 
 impl PermissionType {
@@ -69,8 +75,8 @@ impl PermissionType {
 /// A permission: an action and the role it is granted to.
 ///
 /// ```
-/// use utopia_database::helpers::permission::{Permission, PermissionType};
-/// use utopia_database::helpers::role::Role;
+/// use utopia_database::{Permission, PermissionType};
+/// use utopia_database::Role;
 ///
 /// let p = Permission::parse("read(\"user:123\")").unwrap();
 /// assert_eq!(p.permission(), PermissionType::Read);
@@ -82,7 +88,7 @@ impl PermissionType {
 /// );
 /// ```
 ///
-/// PHP: `Utopia\Database\Helpers\Permission`; `getRole()`,
+/// PHP: `Utopia\Database\Permission`; `getRole()`,
 /// `getIdentifier()` and `getDimension()` are read through [`Permission::role`].
 #[derive(Clone, PartialEq, Eq, Hash, Debug)]
 pub struct Permission {

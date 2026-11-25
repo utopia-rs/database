@@ -1,7 +1,7 @@
 //! [`Role`]: who a permission is granted to (`any`, `users`, `user:<id>`,
 //! `team:<id>/<dimension>`, ...).
 //!
-//! PHP: `Utopia\Database\Helpers\Role`.
+//! PHP: `Utopia\Database\Role`.
 
 use std::fmt;
 
@@ -10,7 +10,7 @@ use crate::error::{Error, Result};
 /// The name of a role: one of the roles the library knows, or any other
 /// name (PHP parses and stores roles it does not know).
 ///
-/// PHP: the `$role` string of `Helpers\Role` (`Validator\Roles::ROLE_*`
+/// PHP: the `$role` string of `Role` (`Validator\Roles::ROLE_*`
 /// for the known ones).
 #[derive(Clone, PartialEq, Eq, Hash, Debug)]
 pub enum RoleName {
@@ -77,7 +77,7 @@ impl RoleName {
 /// written `name:identifier/dimension`.
 ///
 /// ```
-/// use utopia_database::helpers::role::Role;
+/// use utopia_database::Role;
 ///
 /// let role = Role::parse("team:123/owner").unwrap();
 /// assert_eq!(role.name().as_str(), "team");
@@ -87,7 +87,7 @@ impl RoleName {
 /// assert_eq!(Role::parse("users/a/b").unwrap_err().message(), "Only one dimension can be provided");
 /// ```
 ///
-/// PHP: `Utopia\Database\Helpers\Role`. As in PHP, an identifier or a
+/// PHP: `Utopia\Database\Role`. As in PHP, an identifier or a
 /// dimension of `"0"` is falsy: [`Role::to_string`] leaves it out, and
 /// [`Role::parse`] rejects a `"0"` dimension as empty.
 #[derive(Clone, PartialEq, Eq, Hash, Debug)]

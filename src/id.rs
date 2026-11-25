@@ -1,6 +1,6 @@
 //! Document identifiers: [`unique`] generates one, [`custom`] takes one given.
 //!
-//! PHP: `Utopia\Database\Helpers\ID`.
+//! PHP: `Utopia\Database\Id`.
 
 use crate::error::{Error, Result};
 
@@ -11,7 +11,7 @@ pub const PADDING: i64 = 7;
 /// then [`PADDING`] random hex characters (20 characters in all).
 ///
 /// ```
-/// use utopia_database::helpers::id;
+/// use utopia_database::id;
 ///
 /// let id = id::unique().unwrap();
 /// assert_eq!(id.len(), 20);

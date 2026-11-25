@@ -2,66 +2,36 @@
 //! documents with permissions, queries, relationships, tenancy and caching,
 //! over pluggable storage adapters.
 //!
-//! [`Database`] is the entry point: it validates and encodes documents,
-//! checks permissions against an [`Authorization`], caches reads, resolves
-//! relationships and hands storage to an [`Adapter`] ([`adapter::postgres`]).
-//! [`Document`] carries attributes as PHP values ([`Value`]), [`Query`]
-//! filters, orders and pages finds, and [`Operator`] updates attributes
-//! atomically.
-//!
 //! The crate reads and writes the same tables, rows and metadata as
 //! `utopia-php/database`, so PHP and Rust services share one dataset.
 //!
-//! PHP: `utopia-php/database` 7.4. Each PHP class maps onto one item:
+//! # Port status
+//!
+//! Only the modules without I/O are here so far: identifiers, roles,
+//! permissions, dates and the errors they fail with. The rest of the crate
+//! (the model, the adapters, the validators and the [`Error`] marks they
+//! set) comes from appwrite/appwrite#14308.
+//!
+//! # PHP classes and their Rust items
 //!
 //! | PHP | Rust |
 //! |---|---|
-//! | `Utopia\Database\Database` | [`Database`] (constants as associated constants: `Database::VAR_STRING`) |
-//! | `Utopia\Database\Document` | [`Document`] |
-//! | `Utopia\Database\Query` | [`Query`], [`query::Method`] |
-//! | `Utopia\Database\Operator` | [`Operator`], [`operator::OperatorMethod`] |
-//! | `Utopia\Database\Change` | [`Change`] |
-//! | `Utopia\Database\Connection` | [`connection`] |
+//! | `Utopia\Database\Id` | [`id`] |
+//! | `Utopia\Database\Role` | [`Role`] |
+//! | `Utopia\Database\Permission`, `PermissionType` | [`Permission`], [`PermissionType`] |
 //! | `Utopia\Database\DateTime` | [`datetime`] |
-//! | `Utopia\Database\Helpers\{ID, Role, Permission}` | [`helpers::id`], [`helpers::role`], [`helpers::permission`] |
-//! | `Utopia\Database\Validator\*` | [`validator`] |
-//! | `Utopia\Database\Validator\Authorization` | [`Authorization`] |
-//! | `Utopia\Database\Adapter` | [`Adapter`] |
-//! | `Utopia\Database\Adapter\Postgres` (with `Adapter\SQL`) | [`adapter::postgres::Postgres`] |
-//! | `Utopia\Database\Adapter\MariaDB`, `Adapter\MySQL` (with `Adapter\SQL`) | `adapter::mariadb::MariaDB` (features `mariadb`, `mysql`; `Flavor`) |
-//! | `Utopia\Database\Adapter\SQLite` (with `Adapter\MariaDB`, `Adapter\SQL`; feature `sqlite`) | `adapter::sqlite::Sqlite` |
-//! | `Utopia\Database\Adapter\Memory` (feature `memory`) | `adapter::memory::Memory` |
 //! | `Utopia\Database\Exception` and `Exception\*` | [`Error`], [`Kind`] |
-//! | PHP values (`mixed`) | [`Value`] (`php_std::Value` with [`value::Ext`]) |
 
 #![warn(missing_docs)]
 
-/// The getting started guide (`guide.md`), compiled and run with the doctests.
-#[cfg(doctest)]
-#[doc = include_str!("../guide.md")]
-pub struct GettingStarted;
-
-pub mod adapter;
-pub mod change;
-pub mod connection;
-pub mod database;
 pub mod datetime;
-pub mod document;
+// The marks are set and read by the modules that are not here yet.
+#[allow(dead_code)]
 pub mod error;
-pub mod helpers;
-pub mod mirror;
-pub mod mirroring;
-pub mod operator;
-pub mod query;
-pub mod validator;
-pub mod value;
+pub mod id;
+pub mod permission;
+pub mod role;
 
-pub use adapter::Adapter;
-pub use change::Change;
-pub use database::Database;
-pub use document::Document;
 pub use error::{Error, Kind, Result};
-pub use operator::Operator;
-pub use query::Query;
-pub use validator::authorization::Authorization;
-pub use value::{Array, Value};
+pub use permission::{Permission, PermissionType};
+pub use role::Role;
